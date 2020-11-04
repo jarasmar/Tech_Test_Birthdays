@@ -30,7 +30,17 @@ class User
 
   # Returns a Date object for the user's next birthday
   def next_birthday
-    # code here
+    if Date.today.month > @date_of_birth.month
+      return Date.new(Date.today.year + 1, @date_of_birth.month, @date_of_birth.day)
+    elsif Date.today.month < @date_of_birth.month
+      return Date.new(Date.today.year, @date_of_birth.month, @date_of_birth.day)
+    elsif Date.today.month == @date_of_birth.month
+      if Date.today.day >= @date_of_birth.day
+        return Date.new(Date.today.year + 1, @date_of_birth.month, @date_of_birth.day)
+      else
+        return Date.new(Date.today.year, @date_of_birth.month, @date_of_birth.day)
+      end
+    end
   end
 end
 
@@ -38,7 +48,10 @@ tests = [
   Date.new(1986, 1, 1),
   Date.new(1988, Date.today.month, Date.today.day),
   Date.new(1992, 12, 30),
-  Date.new(1992, 06, 06)
+  Date.new(1992, 06, 06),
+  Date.new(1992, 11, 05),
+  Date.new(1992, 11, 04),
+  Date.new(1992, 11, 03)
 ]
 
 puts '===== ages ====='
