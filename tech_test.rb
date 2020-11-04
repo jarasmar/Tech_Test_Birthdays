@@ -10,15 +10,20 @@ class User
 
   # Returns and Integer representing the user's current age
   def age 
-    if Date.today.month > @date_of_birth.month
-      return Date.today.year - @date_of_birth.year
-    elsif Date.today.month < @date_of_birth.month
-      return Date.today.year - @date_of_birth.year - 1
-    elsif Date.today.month == @date_of_birth.month
+    @age = Date.today.year - @date_of_birth.year
+
+    # Case birthday month has passed
+    return @age if Date.today.month > @date_of_birth.month
+
+    # Case birthday month has not yet passed
+    return @age - 1 if Date.today.month < @date_of_birth.month
+
+    ## Case birthday month is current month
+    if Date.today.month == @date_of_birth.month
       if Date.today.day >= @date_of_birth.day
-        return Date.today.year - @date_of_birth.year
+        return @age
       else
-        return Date.today.year - @date_of_birth.year - 1
+        return @age - 1
       end
     end
   end
