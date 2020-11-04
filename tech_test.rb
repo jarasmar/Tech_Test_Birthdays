@@ -18,7 +18,7 @@ class User
     # Case birthday month has not yet passed
     return @age - 1 if Date.today.month < @date_of_birth.month
 
-    ## Case birthday month is current month
+    # Case birthday month is current month
     if Date.today.month == @date_of_birth.month
       if Date.today.day >= @date_of_birth.day
         return @age
@@ -30,15 +30,22 @@ class User
 
   # Returns a Date object for the user's next birthday
   def next_birthday
-    if Date.today.month > @date_of_birth.month
-      return Date.new(Date.today.year + 1, @date_of_birth.month, @date_of_birth.day)
-    elsif Date.today.month < @date_of_birth.month
-      return Date.new(Date.today.year, @date_of_birth.month, @date_of_birth.day)
-    elsif Date.today.month == @date_of_birth.month
-      if Date.today.day >= @date_of_birth.day
-        return Date.new(Date.today.year + 1, @date_of_birth.month, @date_of_birth.day)
+    @current_year = Date.today.year
+    @birth_month = @date_of_birth.month
+    @birth_day = @date_of_birth.day
+
+    # Case birthday month has passed
+    return Date.new(@current_year + 1, @birth_month, @birth_day) if Date.today.month > @birth_month
+
+    # Case birthday month has not yet passed
+    return Date.new(@current_year, @birth_month, @birth_day) if Date.today.month < @birth_month
+    
+    # Case birthday month is current month
+    if Date.today.month == @birth_month
+      if Date.today.day >= @birth_day
+        return Date.new(@current_year + 1, @birth_month, @birth_day)
       else
-        return Date.new(Date.today.year, @date_of_birth.month, @date_of_birth.day)
+        return Date.new(@current_year, @birth_month, @birth_day)
       end
     end
   end
